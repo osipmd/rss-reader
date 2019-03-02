@@ -5,6 +5,10 @@ import com.rometools.rome.feed.synd.SyndEntry;
 
 import java.util.List;
 
+/**
+ * It's class of Category parameter RSS channel
+ * @author Mikhail Osipov
+ */
 public class Category extends RssParameter {
 
     private static final String NAME = "category";

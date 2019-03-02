@@ -9,12 +9,28 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.*;
 
+/**
+ * Base class for working with RSS.
+ * Create and start new RSS.
+ * Change already created and running RSS.
+ * Turn on, turn off RSS.
+ *
+ * @author Mikhail Osipov
+ */
 public class RssHandler {
 
     private final ConcurrentHashMap<String, ParseFeedTask> tasks = new ConcurrentHashMap<>();
     private final ConcurrentHashMap<String, ScheduledFuture> futures = new ConcurrentHashMap<>();
     private final ScheduledExecutorService scheduledExecutorService = Executors.newScheduledThreadPool(10);
 
+    /**
+     * Create and start new RSS
+     * @param url - rss url
+     * @param outputFileName - output file name
+     * @param pollPeriod - poll period
+     * @param itemsAmount - item amount
+     * @param parameters - parameters
+     */
     public void addRss(final String url, final String outputFileName, final Long pollPeriod, final Long itemsAmount,
                        final List<String> parameters) {
         try {
@@ -34,6 +50,9 @@ public class RssHandler {
         }
     }
 
+    /**
+     * Restore all previously created RSS from configuration files
+     */
     public void restoreAllRssFromConfig() {
         try {
             List<RssConfiguration> configurations = PropertiesHandler.readAllProperties();
@@ -43,6 +62,10 @@ public class RssHandler {
         }
     }
 
+    /**
+     * Create RSS from {@link ru.osipmd.rss.RssConfiguration}. Start RSS if turnOn is true
+     * @param configuration {@link ru.osipmd.rss.RssConfiguration}
+     */
     private void addRss(final RssConfiguration configuration) {
         final String url = configuration.getUrl();
         try {
@@ -65,6 +88,14 @@ public class RssHandler {
     }
 
 
+    /**
+     * Check rss
+     * If rss hasn't items or pubDate tag - is not valid
+     * @param url - rss url
+     * @return - check result
+     * @throws FeedException
+     * @throws IOException
+     */
     private boolean isNotValidRss(final String url) throws FeedException, IOException {
         final SyndFeed feed = FeedHandler.getFeed(url);
         final List<SyndEntry> items = feed.getEntries();
@@ -79,6 +110,11 @@ public class RssHandler {
         return false;
     }
 
+    /**
+     * Change output file name for RSS
+     * @param url - rss url
+     * @param newOutputFileName - new file output name
+     */
     public void changeOutputFileName(final String url, final String newOutputFileName) {
         ParseFeedTask task = tasks.get(url);
         if (task == null) {
@@ -94,6 +130,11 @@ public class RssHandler {
         }
     }
 
+    /**
+     * Change items amount for RSS
+     * @param url - rss url
+     * @param newAmount - new fitems amount
+     */
     public void changeAmountOfItems(final String url, final Long newAmount) {
         ParseFeedTask task = tasks.get(url);
         if (task == null) {
@@ -109,6 +150,11 @@ public class RssHandler {
         }
     }
 
+    /**
+     * change poll period for RSS
+     * @param url - RSS url
+     * @param newPollPeriod - new poll period
+     */
     public void changePollPeriod(final String url, final Long newPollPeriod) {
         ParseFeedTask task = tasks.get(url);
         if (task == null) {
@@ -133,6 +179,10 @@ public class RssHandler {
         }
     }
 
+    /**
+     * Turn on RSS feed
+     * @param url - RSS url
+     */
     public void turnOnRss(final String url) {
         ParseFeedTask task = tasks.get(url);
         if (task == null) {
@@ -155,6 +205,10 @@ public class RssHandler {
         }
     }
 
+    /**
+     * Turn off RSS feed
+     * @param url - RSS url
+     */
     public void turnOffRss(final String url) {
         ParseFeedTask task = tasks.get(url);
         if (task == null) {
@@ -180,6 +234,9 @@ public class RssHandler {
         }
     }
 
+    /**
+     * Print list of running rss
+     */
     public void printRunningRss() {
         for (Map.Entry<String, ParseFeedTask> task : tasks.entrySet()) {
             if (task.getValue().getConfiguration().getTurnOn()) {
@@ -188,6 +245,9 @@ public class RssHandler {
         }
     }
 
+    /**
+     * Print list of disabled rss
+     */
     public void printDisabledRss() {
         for (Map.Entry<String, ParseFeedTask> task : tasks.entrySet()) {
             if (!task.getValue().getConfiguration().getTurnOn()) {

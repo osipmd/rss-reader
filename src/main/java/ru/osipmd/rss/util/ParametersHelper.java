@@ -6,6 +6,10 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 
+/**
+ * It's helper class for work with RSS parameters.
+ * @author Mikhail Osipov
+ */
 public class ParametersHelper {
 
     private static final Map<String, Class> parametersMap = new ConcurrentHashMap<>();
@@ -20,6 +24,11 @@ public class ParametersHelper {
         parametersMap.put("category", Category.class);
     }
 
+    /**
+     * transform parameter's name list to parameter's object list
+     * @param parameters - parameter's name list
+     * @return - parameter's object list
+     */
     public static Set<RssParameter> getParametersFromNames(final List<String> parameters) {
         final Set<RssParameter> rssParameters = new HashSet<>();
         for (String parameter : parameters) {

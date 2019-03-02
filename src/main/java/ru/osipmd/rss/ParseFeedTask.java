@@ -8,8 +8,15 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Date;
 
+/**
+ * Runnable implementation for getting info from RSS in another Thread
+ * @author Mikhail Osipov
+ */
 public class ParseFeedTask implements Runnable {
 
+    /**
+     * Configuration for Feed
+     */
     private RssConfiguration configuration;
 
     ParseFeedTask(RssConfiguration configuration) {
@@ -31,14 +38,23 @@ public class ParseFeedTask implements Runnable {
         }
     }
 
-    private void writeFeedToFile(String items) throws IOException {
+    /**
+     * Write getting record to file
+     * @param feedString - record
+     * @throws IOException
+     */
+    private void writeFeedToFile(final String feedString) throws IOException {
         synchronized (configuration.getOutputFileName()) {
             try (FileWriter wtiter = new FileWriter(configuration.getOutputFileName(), true)) {
-                wtiter.write(items);
+                wtiter.write(feedString);
             }
         }
     }
 
+    /**
+     * Get feed configuration
+     * @return - feed configuration
+     */
     public RssConfiguration getConfiguration() {
         return configuration;
     }

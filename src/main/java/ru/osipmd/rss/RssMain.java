@@ -4,6 +4,21 @@ import ru.osipmd.rss.util.RssUrlHelper;
 
 import java.util.*;
 
+/**
+ * Main class. Start CLI application. Displays tips and receives input from the user.
+ *
+ * Available commands:
+ * add [url] - add new rss chanel
+ * configure [url] - change settings of rss
+ * turn-on [url] - turn on rss chanel
+ * turn-off [url] - turn off rss chanel
+ * on-list - list of running rss
+ * off-list - list of disabled rss
+ * help - get list available commands
+ * exit - close program
+ *
+ * @author Mikhail Osipov
+ */
 public class RssMain {
 
     private static final Scanner in = new Scanner(System.in);

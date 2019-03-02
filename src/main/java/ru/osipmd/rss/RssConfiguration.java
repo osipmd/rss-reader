@@ -10,12 +10,15 @@ import java.util.Date;
 import java.util.List;
 import java.util.Set;
 
+/**
+ * RssConfiguration. Contains all information about RSS and parameters.
+ * @author Mikhail Osipov
+ */
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
 public class RssConfiguration {
-
     private String url;
     private String outputFileName;
     private Long pollPeriod;

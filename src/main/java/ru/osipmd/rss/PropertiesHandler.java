@@ -15,6 +15,10 @@ import java.util.Properties;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+/**
+ * Helper class fow reading/writing RSS configuration and create RSS configuration by parameters
+ * @author Mikhail Osipov
+ */
 public class PropertiesHandler {
 
     private static final String BASE_RSS_CONFIG_PATH = getBaseRssConfigPath();
@@ -22,6 +26,10 @@ public class PropertiesHandler {
     private static final String YAML_EXT = ".yaml";
     private static final String TXT_EXT = ".txt";
 
+    /**
+     * Get path to folder where app will save rss configuration
+     * @return path to folder from config
+     */
     public static String getBaseRssConfigPath() {
         Properties prop = new Properties();
         try (InputStream inputStream = PropertiesHandler.class.getClassLoader().getResourceAsStream("application.properties")) {
@@ -32,6 +40,10 @@ public class PropertiesHandler {
         return prop.getProperty("config.base.path");
     }
 
+    /**
+     * Get path to folder where app will save records from RSS
+     * @return path to folder from config
+     */
     public static String getBaseStoragePath() {
         Properties prop = new Properties();
         try (InputStream inputStream = PropertiesHandler.class.getClassLoader().getResourceAsStream("application.properties")) {
@@ -42,15 +54,25 @@ public class PropertiesHandler {
         return prop.getProperty("storage.base.path");
     }
 
-
-    public static RssConfiguration readProperties(final String rssUrl) throws IOException {
+    /**
+     * Read {@link ru.osipmd.rss.RssConfiguration} from file
+     * @param filePath - file path
+     * @return {@link ru.osipmd.rss.RssConfiguration}
+     * @throws IOException
+     */
+    public static RssConfiguration readProperties(final String filePath) throws IOException {
         final Yaml yaml = new Yaml();
-        final File configFile = new File(getPath(rssUrl));
+        final File configFile = new File(getPath(filePath));
         try (InputStream configFileStream = new FileInputStream(configFile)) {
             return yaml.load(configFileStream);
         }
     }
 
+    /**
+     * Read all previously saved {@link ru.osipmd.rss.RssConfiguration}
+     * @return {@link ru.osipmd.rss.RssConfiguration} list
+     * @throws IOException
+     */
     public static List<RssConfiguration> readAllProperties() throws IOException {
         final List<RssConfiguration> configurations = new ArrayList<>();
         final Yaml yaml = new Yaml();
@@ -65,6 +87,11 @@ public class PropertiesHandler {
         }
     }
 
+    /**
+     * Write {@link ru.osipmd.rss.RssConfiguration} to .yaml file
+     * @param configuration source {@link ru.osipmd.rss.RssConfiguration}
+     * @throws IOException
+     */
     public static void writeProperties(final RssConfiguration configuration) throws IOException {
         final Yaml yaml = new Yaml();
         final File configFile = new File(getPath(configuration.getUrl()));
@@ -77,6 +104,16 @@ public class PropertiesHandler {
         return BASE_RSS_CONFIG_PATH + File.separator + RssUrlHelper.getPathFromUrl(url) + YAML_EXT;
     }
 
+    /**
+     * Create {@link ru.osipmd.rss.RssConfiguration} by parameters
+     * @param url - rss url
+     * @param outputFileName - output file name
+     * @param pollPeriod - poll period
+     * @param itemsAmount - items amount
+     * @param parameters - rss parameters
+     * @return created {@link ru.osipmd.rss.RssConfiguration}
+     * @throws IOException
+     */
     public static RssConfiguration createNewRssConfiguration(final String url, final String outputFileName, final Long pollPeriod,
                                                              final Long itemsAmount, final List<String> parameters) throws IOException {
         RssConfiguration configuration = RssConfiguration.builder()
