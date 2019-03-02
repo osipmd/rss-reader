@@ -85,7 +85,7 @@ public class RssMain {
         System.out.println("\ton-list - list of running rss");
         System.out.println("\toff-list - list of disabled rss");
         System.out.println("\thelp - get list available commands");
-        System.out.println("\texit");
+        System.out.println("\texit - close program");
     }
 
     private static void addNewRss(final String url) {
