@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/rss-reader.iml" filepath="$PROJECT_DIR$/.idea/modules/rss-reader.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/rss-reader_main.iml" filepath="$PROJECT_DIR$/.idea/modules/rss-reader_main.iml" group="rss-reader" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/rss-reader_test.iml" filepath="$PROJECT_DIR$/.idea/modules/rss-reader_test.iml" group="rss-reader" />
+    </modules>
+  </component>
+</project>
