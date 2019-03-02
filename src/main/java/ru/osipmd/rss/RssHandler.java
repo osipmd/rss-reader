@@ -29,7 +29,6 @@ public class RssHandler {
             tasks.put(url, task);
         } catch (IOException e) {
             System.out.println(String.format("An error occurred during the adding feed %s", url));
-            System.out.println(e);
         } catch (FeedException e) {
             System.out.println(String.format("Sorry, but feed %s is not valid.", url));
         }

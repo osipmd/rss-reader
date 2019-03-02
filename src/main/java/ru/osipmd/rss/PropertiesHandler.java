@@ -22,7 +22,7 @@ public class PropertiesHandler {
     private static final String YAML_EXT = ".yaml";
     private static final String TXT_EXT = ".txt";
 
-    private static String getBaseRssConfigPath() {
+    public static String getBaseRssConfigPath() {
         Properties prop = new Properties();
         try (InputStream inputStream = PropertiesHandler.class.getClassLoader().getResourceAsStream("application.properties")) {
             prop.load(inputStream);
@@ -32,7 +32,7 @@ public class PropertiesHandler {
         return prop.getProperty("config.base.path");
     }
 
-    private static String getBaseStoragePath() {
+    public static String getBaseStoragePath() {
         Properties prop = new Properties();
         try (InputStream inputStream = PropertiesHandler.class.getClassLoader().getResourceAsStream("application.properties")) {
             prop.load(inputStream);
@@ -64,7 +64,6 @@ public class PropertiesHandler {
             return configurations;
         }
     }
-
 
     public static void writeProperties(final RssConfiguration configuration) throws IOException {
         final Yaml yaml = new Yaml();

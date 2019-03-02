@@ -26,7 +26,7 @@ public class FeedHandler {
     public static String getNewItemsFromRss(final SyndFeed feed, final Long itemsAmount, final Set<RssParameter> parameters, final Date lastPollTime) {
         final List<SyndEntry> items = feed.getEntries().stream()
                 .filter((i) -> lastPollTime.before(i.getPublishedDate()))
-                .sorted(Comparator.comparing(SyndEntry::getPublishedDate))
+                .sorted(Comparator.comparing(SyndEntry::getPublishedDate).reversed())
                 .limit(itemsAmount)
                 .collect(Collectors.toList());
         final StringBuilder result = new StringBuilder();
